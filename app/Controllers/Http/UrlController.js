@@ -12,8 +12,7 @@ class UrlController {
 
 			const qrCode = await qrcode.toDataURL(url.long_url);
 
-			response.send(qrCode)
-			return
+			return view.render('stats.index',{qr_code:qrCode,url:url})
 		} catch (error) {
 
 		}
