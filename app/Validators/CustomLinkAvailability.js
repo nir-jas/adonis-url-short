@@ -9,7 +9,10 @@ class CustomLinkAvailability {
 
   get messages() {
 	  return {
-		  'url_key.routeAvailability':'Not available.'
+		  'url_key.max': 'length should be less than 20 characters',
+		  'url_key.routeAvailability':'Not available',
+		  'url_key.unique':'Not available',
+		  'url_key.lowercase':'Must be Lowercase'
 	  }
   }
 

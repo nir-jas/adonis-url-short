@@ -16,8 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('home.index')
+Route.on('/').render('home.index').as('home')
 Route.on('/login').render('home.index')
+
+Route.post('/create','UrlController.create').as('createShortLink').middleware(['linkChecker'])
+Route.get('/+:url_key', 'UrlController.view').as('short_url.stats')
 
 Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])

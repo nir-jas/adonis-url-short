@@ -1,26 +1,50 @@
-'use strict'
-const { validate } = use('Validator')
+"use strict";
+const Url = use("App/Models/Url")
+const Logger = use('Logger')
+const qrcode = require('qrcode')
 
 class UrlController {
-  async create({ request, view, response, auth }){
+	async view({ request, view, response, auth, params }) {
+		try {
+			const url = await Url.query()
+				.where('url_key', params.url_key)
+				.first()
 
-  }
+			const qrCode = await qrcode.toDataURL(url.long_url);
 
-  async customLinkAvailabilityCheck({ request, view, response, auth }){
-	  const rules = {
-		  'url_key': 'required|max:20|unique:urls|lowercase|routeAvailability'
-	  }
+			response.send(qrCode)
+			return
+		} catch (error) {
 
-	  const validation = await validate(request.all(), rules)
+		}
+	}
 
-	  if (validation.fails()) {
-		return response.json({
-			errors:validation.messages()
-		})
-	  }
+	async create({ request, view, response, auth, session }) {
+		try {
+			const urlKey = request.input("custom_url_key") ? request.input("custom_url_key") : await Url.generateKey();
 
-	  return response.json({'success':'Available'})
-  }
+			await Url.create({
+				'user_id'    : await auth.user ? auth.user.id : null,
+				'long_url'   : request.input("long_url"),
+				'meta_title' : request.input("long_url"),
+				'url_key'    : urlKey,
+				'is_custom'  : request.input("custom_url_key") ? 1 : 0,
+				'ip'         : request.ip(),
+			})
+
+			console.log(urlKey)
+			response.route('short_url.stats',{"url_key":urlKey})
+			return
+		} catch (error) {
+			Logger.error("Short URL Creation Failed",error)
+			session.flash({
+				'error':'Sorry, our service is currently under maintenance.'
+			})
+			response.redirect('back')
+			return
+		}
+
+	}
 }
 
-module.exports = UrlController
+module.exports = UrlController;
