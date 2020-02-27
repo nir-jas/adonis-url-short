@@ -26,14 +26,22 @@ mix
 	],'public/js/master.js')
 	.version()
 
-
 mix
+	.styles([
+		'node_modules/jssocials/dist/jssocials.css',
+		'node_modules/jssocials/dist/jssocials-theme-flat.css'
+	], 'public/css/stats.css')
 	.scripts([
 		'node_modules/jquery.typewatch/jquery.typewatch.js',
 		'resources/assets/js/home.js'
 	], 'public/js/home.js')
-    .version()
-
+	.scripts([
+		'node_modules/clipboard/dist/clipboard.min.js',
+		'resources/assets/js/stats.js',
+		"node_modules/jssocials/dist/jssocials.js",
+	], 'public/js/stats.js')
+	.version()
+	
 mix.copy('resources/assets/images', 'public/images', false);
 
 // Full API

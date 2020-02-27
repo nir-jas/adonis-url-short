@@ -1,16 +1,55 @@
 @layout('master')
 
 @section('styles')
-
+	{{ style(mix('css/stats.css')) }}
 @endsection
 
 @section('content')
-<div class="container-fluid">
-	<img src="{{qr_code}}" />
+<div class="container">
+	<div class="card shadow-sm mt-5">
+		<div class="form-row">
+			<div class="col-3">
+				<div class="text-center">
+					<img src="{{qr_code}}" width="200"/>
+				</div>
+				<div class="text-center">
+					<span>Scan QR Code</span>
+				</div>
+			</div>
+
+			<div class="col-9 d-flex align-items-center">
+				<div class="">
+					<div class="">
+						<label class="text-muted">Short Url</label></br>
+						<p>
+							<span class="short-url">
+								<a href="{{ config('app.url')+'/'+url.url_key }}" target="_blank"
+								id="copy">{{ config('app.url')+'/'+url.url_key }}</a>
+							</span>
+							<button data-clipboard-text="{{ config('app.url')+'/'+url.url_key }}" class="btn btn-sm ml-4 btn-clipboard px-1 py-0 btn-outline-success">Copy</button>
+						</p>
+					</div>
+
+					<div class="mt-4">
+						<label class="text-muted">Original Url</label></br>
+						<p>
+							<a class="text-dark" href="https://adonisjs.com/docs/4.0/authentication" target="_blank" style="text-decoration:none;">{{url.long_url}}</a>
+						</p>
+					</div>
+
+					<div class="mt-4">
+						<i class="fas fa-sync-alt"></i>
+						{{--  <button class="btn btn-secondary btn-circle"></button>  --}}
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 @endsection
 
 @section('scripts')
-
-
+{{ script(mix('js/stats.js')) }}
 @endsection
