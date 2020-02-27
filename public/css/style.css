@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900');
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+.shorten-btn {
+  background: #0062cc;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #0062cc, #26ed9f);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #0062cc, #26ed9f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.custom-url--title {
+  font-weight: bold;
+}
+.custom-url--description {
+  font-size: 0.8rem;
+  font-weight: lighter;
+}
+.custom-url .site-url {
+  display: inline;
+  font-size: 25px;
+}
+.custom-url .url-field {
+  display: inline;
+  color: #0062cc;
+  font-size: 1.5rem;
+  background: none;
+  height: calc(2rem + 2px);
+  max-width: 200px;
+  padding: 0 0.5rem;
+  border: none;
+  border-bottom: 4px solid #0062cc;
+}
+.custom-url .url-field:focus {
+  box-shadow: none;
+}

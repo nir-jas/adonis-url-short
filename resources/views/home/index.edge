@@ -1,0 +1,112 @@
+@layout('master')
+
+@section('styles')
+<style>
+	.banner-title {
+		font-size: 4.5vw;
+		font-weight: lighter;
+		background: -webkit-linear-gradient(#26ed9f, #01a1f7);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	@media (max-width: 768px) {
+		.banner-title {
+			font-size: 8vw;
+			font-weight: lighter;
+			background: -webkit-linear-gradient(#26ed9f, #01a1f7);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+	}
+</style>
+@endsection
+
+@section('content')
+<div class="container-fluid">
+	<div class="p-4 text-center container">
+		<h1 class="p-4 banner-title">Shorten links to better spread your story on social media</h1>
+	</div>
+
+	<div class="form-row p-2">
+		<div class="col-12 col-lg-6 col-md-6 offset-md-3 offset-lg-3">
+			<form action="post">
+				{{ csrfField() }}
+				<div class="input-group mb-3 shadow-sm">
+					<input name="long_url" type="text" class="form-control form-control-lg bg-light"
+						placeholder="Paste a link to be shortened" aria-label="Paste a link to be shortened">
+					<div class="input-group-append ">
+						<button type="submit" class="btn bg-primary text-white px-4">Shorten</button>
+					</div>
+				</div>
+				<div class="custom-url">
+					<div class="custom-url--title">Custom URL (optional)</div>
+					<span class="custom-url--description text-muted d-block mb-2">
+						Replace clunky URLs with meaningful short links that get more clicks.
+					</span>
+					<div class="site-url">{{ config('app.url') }}/</div>
+					<input class="form-control form-control-sm url-field" id="custom_url_key" name="custom_url_key">
+					<small class="ml-3" id="link-availability-status"></small>
+				</div>
+			</form>
+		</div>
+		<div class="col"></div>
+	</div>
+</div>
+@endsection
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TypeWatch/3.0.1/jquery.typewatch.min.js"
+	integrity="sha256-94+gWfKF4uG4GehZtgzydWPjv3ee/E0iZV+3cLi28cE=" crossorigin="anonymous"></script>
+
+<script>
+	$(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrfToken }}"
+        }
+    });
+
+    var twOptions = {
+        callback: function (value) {
+			$('#link-availability-status').html("")
+
+			if (value.length>0) {
+				$('#link-availability-status').html('<span><i class="fa fa-spinner"></i> Loading..</span>');
+				$.ajax({
+					url: "/api/custom_link/check_availability",
+					type: 'POST',
+					data: {
+						'url_key': $('#custom_url_key').val()
+					},
+					dataType: "json"
+				})
+            	.done(function(data) {
+						$("#link-availability-status")
+							.removeClass("text-danger")
+							.addClass("text-success");
+						$("#link-availability-status").html(data.data.success);
+				}).fail(function (jqXHR, textStatus) {
+					if (jqXHR.responseJSON.data && jqXHR.responseJSON.data.errors) {
+						$("#link-availability-status")
+							.removeClass("text-success")
+							.addClass("text-danger");
+						$("#link-availability-status").html(jqXHR.responseJSON.data.errors[0].message);
+					} else {
+						$("#link-availability-status").html("Hmm. We're having trouble connecting to the server.");
+					}
+				});
+			}
+
+        },
+        wait: 500,
+        captureLength: 1,
+        highlight: true,
+        allowSubmit: false
+    };
+
+    // Add TypeWatch to check when users type
+    $('#custom_url_key').typeWatch(twOptions);
+});
+</script>
+@endsection
