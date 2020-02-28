@@ -1,16 +1,22 @@
 "use strict";
 const Url = use("App/Models/Url")
+const UrlStat = use("App/Models/UrlStat")
+
+const Helpers = use('Helpers')
 const Logger = use('Logger')
-const qrcode = require('qrcode')
+const QRcode = require('qrcode')
+const UserAgent = require('ua-parser-js')
+const Reader = require('@maxmind/geoip2-node').Reader;
 
 class UrlController {
 	async view({ request, view, response, auth, params }) {
 		try {
 			const url = await Url.query()
 				.where('url_key', params.url_key)
+				.with('urlStat')
 				.first()
 
-			const qrCode = await qrcode.toDataURL(url.long_url,{
+			const qrCode = await QRcode.toDataURL(url.long_url,{
 				errorCorrectionLevel: 'H',
 				scale:4,
 				margin:0
@@ -18,7 +24,7 @@ class UrlController {
 
 			return view.render('stats.index',{qr_code:qrCode,url:url})
 		} catch (error) {
-
+			Logger.error("View Stats Error", error)
 		}
 	}
 
@@ -35,7 +41,6 @@ class UrlController {
 				'ip'         : request.ip(),
 			})
 
-			console.log(urlKey)
 			response.route('short_url.stats',{"url_key":urlKey})
 			return
 		} catch (error) {
@@ -45,6 +50,53 @@ class UrlController {
 			})
 			response.redirect('back')
 			return
+		}
+
+	}
+
+	async redirect({ request, view, response, auth, params }){
+		try {
+			const url = await Url.findByOrFail('url_key', params.url_key)
+			url.merge({clicks:url.clicks+1})
+			await url.save()
+
+			const agent = UserAgent(request.header('user-agent'))
+			const country = await this.getCountryByIp(request.ip())
+
+			await UrlStat.create({
+				'url_id'           : url.id,
+				'referer'          : request.header('referer')?request.header('referer'):null,
+				'ip'               : request.ip(),
+				'device'           : agent.device.vendor?agent.device.vendor:'Other',
+				'platform'         : agent.os.name,
+				'platform_version' : agent.os.version,
+				'browser'          : agent.browser.name,
+				'browser_version'  : agent.browser.version,
+				'country'          : country.country_code,
+				'country_full'     : country.country_name
+			})
+
+			response.redirect(url.long_url,false,301);
+			return
+		} catch (error) {
+			Logger.error("URL Redirection Failed",error)
+		}
+	}
+
+	async getCountryByIp(ip) {
+		try {
+			const reader = await Reader.open(Helpers.databasePath('GeoLite2-Country.mmdb'))
+			const country = await reader.country(ip);
+
+			return {
+				country_code:country.country.isoCode,
+				country_name:country.country.names.en
+			}
+		} catch (error) {
+			return {
+				country_code:'N/A',
+				country_name:'Unknown'
+			}
 		}
 
 	}

@@ -42,9 +42,13 @@ mix
 		'resources/assets/js/stats.js'
 	], 'public/js/stats.js')
 	.version()
-	
+
 mix.copy('resources/assets/images', 'public/images', false);
+mix.copy('resources/assets/manifest.json', 'public/manifest.json');
+
 mix.copy('node_modules/jssocials/dist/jssocials-theme-minima.css.map','public/css/jssocials-theme-minima.css.map')
+mix.copy('node_modules/bootstrap/dist/js/bootstrap.min.js.map','public/js/bootstrap.min.js.map')
+mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css.map','public/css/bootstrap.min.css.map')
 
 // Full API
 // mix.js(src, output);

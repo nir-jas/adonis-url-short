@@ -1,6 +1,6 @@
 const { hooks } = require("@adonisjs/ignitor");
 const _ = use('lodash')
-
+const moment = require('moment')
 
 hooks.after.providersBooted(() => {
 	const Response = use("Adonis/Src/Response");
@@ -78,6 +78,10 @@ hooks.after.providersBooted(() => {
 	View.global("config", function(key) {
 		return Config.get(key);
 	});
+
+	View.global("getDayTimeString",function(d) {
+		return moment(d).format("ddd, MMM Do YYYY, h:mm A")
+	})
 });
 
 hooks.after.httpServer(()=>{
