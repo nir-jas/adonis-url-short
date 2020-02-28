@@ -29,7 +29,7 @@ mix
 mix
 	.styles([
 		'node_modules/jssocials/dist/jssocials.css',
-		'node_modules/jssocials/dist/jssocials-theme-flat.css'
+		'node_modules/jssocials/dist/jssocials-theme-minima.css'
 	], 'public/css/stats.css')
 	.scripts([
 		'node_modules/jquery.typewatch/jquery.typewatch.js',
@@ -37,12 +37,14 @@ mix
 	], 'public/js/home.js')
 	.scripts([
 		'node_modules/clipboard/dist/clipboard.min.js',
-		'resources/assets/js/stats.js',
-		"node_modules/jssocials/dist/jssocials.js",
+		"node_modules/jssocials/dist/jssocials.min.js",
+		"node_modules/moment/min/moment.min.js",
+		'resources/assets/js/stats.js'
 	], 'public/js/stats.js')
 	.version()
 	
 mix.copy('resources/assets/images', 'public/images', false);
+mix.copy('node_modules/jssocials/dist/jssocials-theme-minima.css.map','public/css/jssocials-theme-minima.css.map')
 
 // Full API
 // mix.js(src, output);

@@ -1,49 +1,75 @@
 @layout('master')
 
 @section('styles')
-	{{ style(mix('css/stats.css')) }}
+{{ style(mix('css/stats.css')) }}
+<style>
+	.jssocials-share-email .jssocials-share-link {
+		color: #d14836 !important;
+	}
+</style>
 @endsection
 
 @section('content')
 <div class="container">
-	<div class="card shadow-sm mt-5">
-		<div class="form-row">
-			<div class="col-3">
+	<div class="pt-1 pt-md-4 pt-lg-4 text-muted">
+		<ul class="list-inline">
+			<li class="list-inline-item">
+				<i class="far fa-clock"></i>
+				<i>{{ url.created_at }}</i>
+			</li>
+			<li class="list-inline-item">
+				<i class="far fa-eye"></i>
+				<i>
+
+				</i>
+			</li>
+		</ul>
+		<div class="title">{{url.meta_title }}</div>
+	</div>
+	<div class="card shadow-sm mt-3">
+		<div class="form-row py-4">
+			<div class="col-12 col-md-3 col-lg-3">
 				<div class="text-center">
-					<img src="{{qr_code}}" width="200"/>
+					<img src="{{qr_code}}" />
 				</div>
-				<div class="text-center">
+				<div class="text-center pt-2">
 					<span>Scan QR Code</span>
 				</div>
 			</div>
 
-			<div class="col-9 d-flex align-items-center">
-				<div class="">
-					<div class="">
+			<div class="col-12 col-md-9 col-lg-9">
+				<div class="d-flex flex-column justify-content-between h-100 px-4 px-md-0 px-lg-0 pt-4 pt-md-0 pt-lg-0">
+					<div>
 						<label class="text-muted">Short Url</label></br>
 						<p>
 							<span class="short-url">
 								<a href="{{ config('app.url')+'/'+url.url_key }}" target="_blank"
-								id="copy">{{ config('app.url')+'/'+url.url_key }}</a>
+									id="copy">{{ config('app.url')+'/'+url.url_key }}</a>
 							</span>
-							<button data-clipboard-text="{{ config('app.url')+'/'+url.url_key }}" class="btn btn-sm ml-4 btn-clipboard px-1 py-0 btn-outline-success">Copy</button>
+							<button data-clipboard-text="{{ config('app.url')+'/'+url.url_key }}"
+								class="btn btn-sm ml-4 btn-clipboard px-1 py-0 btn-outline-success">Copy</button>
 						</p>
 					</div>
 
-					<div class="mt-4">
+					<div>
 						<label class="text-muted">Original Url</label></br>
 						<p>
-							<a class="text-dark" href="https://adonisjs.com/docs/4.0/authentication" target="_blank" style="text-decoration:none;">{{url.long_url}}</a>
+							<a class="text-dark" href="https://adonisjs.com/docs/4.0/authentication" target="_blank"
+								style="text-decoration:none;">{{url.long_url}}</a>
 						</p>
 					</div>
 
-					<div class="mt-4">
-						<i class="fas fa-sync-alt"></i>
-						{{--  <button class="btn btn-secondary btn-circle"></button>  --}}
+					<div>
+						<div id="jssocials"></div>
 					</div>
-
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div class="card shadow-sm mt-5">
+		<div class="form-row py-4">
+
 		</div>
 	</div>
 

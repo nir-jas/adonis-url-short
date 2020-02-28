@@ -36,6 +36,7 @@
     "adonis-mix": "^1.2.0",
     "clipboard": "^2.0.4",
     "jssocials": "^1.5.0",
+    "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "nanoid": "^2.1.11",
     "qrcode": "^1.4.4"

@@ -10,9 +10,11 @@ class UrlController {
 				.where('url_key', params.url_key)
 				.first()
 
-			console.log(url)
-
-			const qrCode = await qrcode.toDataURL(url.long_url);
+			const qrCode = await qrcode.toDataURL(url.long_url,{
+				errorCorrectionLevel: 'H',
+				scale:4,
+				margin:0
+			});
 
 			return view.render('stats.index',{qr_code:qrCode,url:url})
 		} catch (error) {
