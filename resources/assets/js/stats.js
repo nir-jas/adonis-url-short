@@ -4,13 +4,9 @@ new ClipboardJS('.btn-clipboard').on('success', function() {
 		.attr("title", "Copy to clipboard").tooltip("_fixTitle");
 });
 
-// $(function () {
-// 	$("#share").jsSocials({
-// 		shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
-// 	});
-// })
-
 $("#jssocials").jsSocials({
+	url: $('.btn-clipboard').data('clipboard-text'),
+	text: $('.url-meta-title').text(),
 	shareIn: "popup",
 	showLabel: false,
 	shares: [
