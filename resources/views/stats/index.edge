@@ -11,8 +11,8 @@
 
 @section('content')
 <div class="container">
-	<div class="pt-1 pt-md-4 pt-lg-4 text-muted">
-		<ul class="list-inline" style="font-size:small;">
+	<div class="pt-4 text-muted">
+		<ul class="list-inline mb-1" style="font-size:small;">
 			<li class="list-inline-item">
 				<i class="far fa-clock"></i>
 				<i>{{ getDayTimeString(url.created_at) }}</i>
@@ -22,7 +22,7 @@
 				<span class="ml-2">{{ url.clicks }}</span>
 			</li>
 		</ul>
-		<span class="text-primary" style="font-size:x-large;">{{url.meta_title }}</span>
+		<span class="text-primary url-meta-title" style="font-size:x-large;">{{url.meta_title }}</span>
 	</div>
 	<div class="card shadow-sm mt-3">
 		<div class="form-row py-4">
