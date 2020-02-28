@@ -13,7 +13,6 @@ class UrlController {
 		try {
 			const url = await Url.query()
 				.where('url_key', params.url_key)
-				.with('urlStat')
 				.first()
 
 			const qrCode = await QRcode.toDataURL(url.long_url,{
@@ -21,8 +20,45 @@ class UrlController {
 				scale:4,
 				margin:0
 			});
+			let stats = [];
 
-			return view.render('stats.index',{qr_code:qrCode,url:url})
+			if (url.clicks>0) {
+				const browserStats = await UrlStat.query()
+					.select('browser as name')
+					.where('url_id', url.id)
+					.groupBy('browser')
+					.count("* as clicks");
+
+				const platformStats = await UrlStat.query()
+					.select('platform as name')
+					.where('url_id', url.id)
+					.groupBy('platform')
+					.count("* as clicks");
+
+				const countryStats = await UrlStat.query()
+					.select('country as name')
+					.where('url_id', url.id)
+					.groupBy('country')
+					.count("* as clicks");
+
+					stats = [
+						{
+							title: 'Browsers',
+							stats: browserStats
+						},
+						{
+							title: 'Platforms',
+							stats: platformStats
+						},
+						{
+							title: 'Countries',
+							stats: countryStats
+						}
+					]
+			}
+
+
+			return view.render('stats.index',{qr_code:qrCode,url:url,stats:stats})
 		} catch (error) {
 			Logger.error("View Stats Error", error)
 		}
