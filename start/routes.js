@@ -26,3 +26,4 @@ Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])
 }).prefix('api').namespace('Api/V1')
 
+Route.get('/:url_key','UrlController.redirect')
