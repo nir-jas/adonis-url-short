@@ -1,5 +1,11 @@
 {
     "/css/styles.css": "/css/styles.css?id=5c68e2e41f4fdb512048",
     "/js/master.js": "/js/master.js?id=4f02699ce13928a07875",
-    "/js/home.js": "/js/home.js?id=6f579be442da58b2a98f"
+    "/css/stats.css": "/css/stats.css?id=aedeaafe9fafa7152352",
+    "/js/home.js": "/js/home.js?id=6f579be442da58b2a98f",
+    "/js/stats.js": "/js/stats.js?id=2ee8833fef16fac776a2",
+    "/manifest.json": "/manifest.json?id=bceef5565cae60ec25bd",
+    "/css/jssocials-theme-minima.css.map": "/css/jssocials-theme-minima.css.map?id=66f0ecf1191ea7ad5189",
+    "/js/bootstrap.min.js.map": "/js/bootstrap.min.js.map?id=e7faa89b97bef24e1db0",
+    "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map?id=2e863a645ac3bf565ae4"
 }

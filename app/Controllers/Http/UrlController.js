@@ -8,19 +8,23 @@ const QRcode = require('qrcode')
 const UserAgent = require('ua-parser-js')
 const Reader = require('@maxmind/geoip2-node').Reader;
 
-
 class UrlController {
 	async view({ request, view, response, auth, params }) {
 		try {
 			const url = await Url.query()
 				.where('url_key', params.url_key)
+				.with('urlStat')
 				.first()
 
-			const qrCode = await QRcode.toDataURL(url.long_url);
+			const qrCode = await QRcode.toDataURL(url.long_url,{
+				errorCorrectionLevel: 'H',
+				scale:4,
+				margin:0
+			});
 
 			return view.render('stats.index',{qr_code:qrCode,url:url})
 		} catch (error) {
-
+			Logger.error("View Stats Error", error)
 		}
 	}
 
@@ -61,7 +65,7 @@ class UrlController {
 
 			await UrlStat.create({
 				'url_id'           : url.id,
-				'referer'          : null,
+				'referer'          : request.header('referer')?request.header('referer'):null,
 				'ip'               : request.ip(),
 				'device'           : agent.device.vendor?agent.device.vendor:'Other',
 				'platform'         : agent.os.name,

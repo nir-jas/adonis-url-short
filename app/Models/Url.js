@@ -4,8 +4,22 @@
 const Model = use("Model");
 const Config = use("Config");
 const nanoid = require('nanoid/async/generate')
+const Metascraper = require('scrape-meta')
 
 class Url extends Model {
+
+	static boot () {
+		super.boot()
+
+		this.addHook('beforeCreate', async (urlInstance) => {
+			const metadata = await Metascraper.scrapeUrl(urlInstance.long_url);
+			urlInstance.meta_title = metadata.title
+		})
+	}
+
+	urlStat(){
+		return this.hasMany('App/Models/UrlStat')
+	}
 
 	static async generateKey() {
 		let alphabet = Config.get('adonisUrl.hash_alphabet');

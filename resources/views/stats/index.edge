@@ -1,16 +1,79 @@
 @layout('master')
 
 @section('styles')
-
+{{ style(mix('css/stats.css')) }}
+<style>
+	.jssocials-share-email .jssocials-share-link {
+		color: #d14836 !important;
+	}
+</style>
 @endsection
 
 @section('content')
-<div class="container-fluid">
-	<img src="{{qr_code}}" />
+<div class="container">
+	<div class="pt-1 pt-md-4 pt-lg-4 text-muted">
+		<ul class="list-inline" style="font-size:small;">
+			<li class="list-inline-item">
+				<i class="far fa-clock"></i>
+				<i>{{ getDayTimeString(url.created_at) }}</i>
+			</li>
+			<li class="list-inline-item">
+				<i class="far fa-eye"></i>
+				<span class="ml-2">{{ url.clicks }}</span>
+			</li>
+		</ul>
+		<span class="text-primary" style="font-size:x-large;">{{url.meta_title }}</span>
+	</div>
+	<div class="card shadow-sm mt-3">
+		<div class="form-row py-4">
+			<div class="col-12 col-md-3 col-lg-3">
+				<div class="text-center">
+					<img src="{{qr_code}}" />
+				</div>
+				<div class="text-center pt-2">
+					<span>Scan QR Code</span>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-9 col-lg-9">
+				<div class="d-flex flex-column justify-content-between h-100 px-4 px-md-0 px-lg-0 pt-4 pt-md-0 pt-lg-0">
+					<div>
+						<label class="text-muted">Short Url</label></br>
+						<p>
+							<span class="short-url">
+								<a href="{{ config('app.url')+'/'+url.url_key }}" target="_blank"
+									id="copy">{{ config('app.url')+'/'+url.url_key }}</a>
+							</span>
+							<button data-clipboard-text="{{ config('app.url')+'/'+url.url_key }}"
+								class="btn btn-sm ml-4 btn-clipboard px-1 py-0 btn-outline-success">Copy</button>
+						</p>
+					</div>
+
+					<div>
+						<label class="text-muted">Original Url</label></br>
+						<p>
+							<a class="text-dark" href="https://adonisjs.com/docs/4.0/authentication" target="_blank"
+								style="text-decoration:none;">{{url.long_url}}</a>
+						</p>
+					</div>
+
+					<div>
+						<div id="jssocials"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card shadow-sm mt-5">
+		<div class="form-row py-4">
+
+		</div>
+	</div>
+
 </div>
 @endsection
 
 @section('scripts')
-
-
+{{ script(mix('js/stats.js')) }}
 @endsection
