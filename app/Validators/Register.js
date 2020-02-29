@@ -5,8 +5,8 @@ class Register {
 		return {
 			name: 'required',
 			email: "required|email|unique:users",
-			password: 'required|min:8',
-			confirmpassword: 'required|min:8'
+			password: 'required|min:8|confirmed',
+			password_confirmation: 'required|min:8'
 		}
 	}
 
@@ -18,7 +18,8 @@ class Register {
 			'email.unique':'Email is already used',
 			'password.required':'Password is required',
 			'password.min':'Password must have atleast 8 characters',
-			'confirmpassword.required':'Confirm password is required'
+			'password.confirmed':'Password must match with confirm password',
+			'password_confirmation.required':'Confirm password is required'
 		}
 	}
   
