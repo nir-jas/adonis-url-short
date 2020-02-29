@@ -17,6 +17,7 @@ class Login {
 	}
   
 	async fails(errorMessages) {
+		this.ctx.session.flashOnly(['email'])
 		this.ctx.session.withErrors(errorMessages).flashAll()
 		this.ctx.response.redirect('back')
 		return

@@ -14,6 +14,7 @@ class Register {
 		return {
 			'name.required': 'Name is required',
 			'email.required':'Email is required',
+			'email.email':'A valid email is required',
 			'email.unique':'Email is already used',
 			'password.required':'Password is required',
 			'password.min':'Password must have atleast 8 characters',
@@ -22,9 +23,10 @@ class Register {
 	}
   
 	async fails(errorMessages) {
-		return this.ctx.response.jsend({
-			errors:errorMessages
-		}, 'Bad Request' , 400)
+		this.ctx.session.flashOnly(['name','email'])
+		this.ctx.session.withErrors(errorMessages).flashAll()
+		this.ctx.response.redirect('back')
+		return
 	}
 }
 

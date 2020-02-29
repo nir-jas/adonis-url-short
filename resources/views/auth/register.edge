@@ -46,22 +46,28 @@
 							{{ csrfField() }}
 							<div class="col-auto mb-4">
 								<div class="wrap-input100">
-									<input class="input100" type="text" name="name" placeholder="Name" required>
+									<input class="input100" type="text" name="name" placeholder="Name" value="{{ old('name') }}" required>
 									<span class="focus-input100"></span>
 									<span class="symbol-input100">
 										<span class="lnr lnr-user"></span>
 									</span>
 								</div>
+								@if(hasErrorFor('name'))
+									<span class="text-danger">{{ getErrorFor('name') }}</span>
+								@endif
 							</div>
 
 							<div class="col-auto mb-4">
 								<div class="wrap-input100">
-									<input class="input100" type="email" name="email" placeholder="Email" required>
+									<input class="input100" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
 									<span class="focus-input100"></span>
 									<span class="symbol-input100">
 										<span class="lnr lnr-envelope"></span>
 									</span>
 								</div>
+								@if(hasErrorFor('email'))
+									<span class="text-danger">{{ getErrorFor('email') }}</span>
+								@endif
 							</div>
 
 							<div class="col-auto mb-4">
@@ -72,6 +78,9 @@
 										<span class="lnr lnr-lock"></span>
 									</span>
 								</div>
+								@if(hasErrorFor('password'))
+									<span class="text-danger">{{ getErrorFor('password') }}</span>
+								@endif
 							</div>
 
 							<div class="col-auto mb-4">
@@ -82,6 +91,9 @@
 										<span class="lnr lnr-lock"></span>
 									</span>
 								</div>
+								@if(hasErrorFor('confirmpassword'))
+									<span class="text-danger">{{ getErrorFor('confirmpassword') }}</span>
+								@endif
 							</div>
 
 							<div class="col-auto">
