@@ -9739,7 +9739,22 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900');
 
+html,body {
+	height: 100%;
+}
+
+.content-container {
+	min-height: 100vh;
+}
+
+*{ 
+	 margin: 0;
+    padding: 0;
+    
+}
+
 body {
+  margin: 0;
   font-family: 'Nunito', sans-serif;
   background-color: #F8F9FA;
 }

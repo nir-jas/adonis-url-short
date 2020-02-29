@@ -31,6 +31,9 @@ mix
 		'node_modules/jssocials/dist/jssocials.css',
 		'node_modules/jssocials/dist/jssocials-theme-minima.css'
 	], 'public/css/stats.css')
+	.styles([
+		'resources/assets/css/login.css'
+	], 'public/css/login.css')
 	.scripts([
 		'node_modules/jquery.typewatch/jquery.typewatch.js',
 		'resources/assets/js/home.js'
