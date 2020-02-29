@@ -38,12 +38,23 @@
 			<img src="{{ assetsUrl('images/link.png') }}" width="35">
 			<span class="ml-2">Adonis URL</span>
 		</a>
-		<div class="collapse navbar-collapse" id="navbarText">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+	  
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
 				@loggedIn
-					<li class="nav-item">
-						<a class="nav-link" href="{{ route('/logout') }}">Logout</a>
-					</li>
+					<div class="dropdown user-dropdown text-white">
+						<div class="d-flex justify-content-start align-items-center dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img src="https://ui-avatars.com/api/?name={{ auth.user.name }}&rounded=true&size=36&background=B2DFDB&color=fff&bold=true" class="mr-2" />
+			
+							<span class="text-white">{{auth.user.name}}</span>
+						</div>
+						<div class="dropdown-menu user-dropdown-menu mt-2" aria-labelledby="userDropdown">
+							<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+						</div>
+					</div>
 				@else
 					<li class="nav-item">
 						<a class="nav-link" href="{{ route('/login') }}">Login</a>
@@ -53,12 +64,11 @@
 					</li>
 				@endloggedIn
 			</ul>
+		 
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-	</nav>
+	  </nav>
+
+	  
 
 	@!section('content')
 

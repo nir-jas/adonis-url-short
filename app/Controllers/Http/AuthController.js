@@ -1,36 +1,25 @@
 'use strict'
 const Logger = use('Logger')
 const User = use('App/Models/User')
+const Role = use('Adonis/Acl/Role')
 
 class AuthController {
 	async register({ request, view, response, auth,session}) {
 		let params=request.all();
         try {
-			let user = await User.findBy('email', params.email);
-			if (user) {
-				session.flash({
-					'error':'Sorry, A user with given email already exists.'
-				})
-				response.redirect('back')
-				return
-			}
-
-			if(params.password!=params.confirmpassword){
-				session.flash({
-					'error':'Sorry, Password not matched.'
-				})
-				response.redirect('back')
-				return
-			}
-
-			user = await User.create({
+			const user  = await User.create({
 				"name":params.name,
 				"email":params.email,
 				"password":params.password
 			})
+
+			const roleUser = await Role.findBy('slug','user');
+			
+			await user.roles().attach([roleUser.id]);
+
 			await auth.remember(true).attempt(params.email, params.password)
 
-			response.redirect('/')
+			response.route('home')
 			return
 
         } catch (error) {
