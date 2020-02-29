@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Adonis URL</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		crossorigin="anonymous">
@@ -40,12 +40,18 @@
 		</a>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="{{ route('login') }}">Login</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ route('register') }}">Register</a>
-				</li>
+				@loggedIn
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('/logout') }}">Logout</a>
+					</li>
+				@else
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('/login') }}">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('/register') }}">Register</a>
+					</li>
+				@endloggedIn
 			</ul>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
