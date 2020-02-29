@@ -26,11 +26,11 @@ Route.get('/+:url_key', 'UrlController.view').as('short_url.stats')
 Route.post('/register','AuthController.register').as('registerUser').validator(['Register'])
 Route.post('/login','AuthController.login').as('loginUser').validator(['Login'])
 
-Route.group(() => { 
+Route.get('/error/:status', 'ErrorController.show').as('error')
+
+Route.group(() => {
 	Route.get('/logout','AuthController.logout').as('logout')
 }).middleware(['auth'])
-
-
 
 Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])

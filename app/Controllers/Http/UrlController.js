@@ -92,7 +92,13 @@ class UrlController {
 
 	async redirect({ request, view, response, auth, params }){
 		try {
-			const url = await Url.findByOrFail('url_key', params.url_key)
+			const url = await Url.findBy('url_key',params.url_key)
+
+			if (!url) {
+				response.route('error', { status: '404' })
+				return
+			}
+
 			url.merge({clicks:url.clicks+1})
 			await url.save()
 
@@ -116,6 +122,7 @@ class UrlController {
 			return
 		} catch (error) {
 			Logger.error("URL Redirection Failed",error)
+
 		}
 	}
 
