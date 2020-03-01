@@ -1,10 +1,10 @@
-'use strict'
+"use strict";
 
 class UrlController {
-  async customLinkAvailabilityCheck({ response }){
-	  response.jsend({'success':'Available'},'Successfully Requested')
-	  return
-  }
+	async customLinkAvailabilityCheck({ response }) {
+		response.jsend({ success: "Available" }, "Successfully Requested");
+		return;
+	}
 }
 
-module.exports = UrlController
+module.exports = UrlController;

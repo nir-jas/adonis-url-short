@@ -32,7 +32,7 @@
 </head>
 
 <body>
-	<div class="container-fluid h-100 p-4 bg-primary">
+	<div class="container-fluid h-100 p-3 p-md-4 p-lg-4 bg-primary">
 		<div class="form-row">
 			<div class="col-12 col-md-4 col-lg-4 offset-md-4 offset-lg-4">
 				<div class="card shadow-sm p-4">
@@ -46,9 +46,9 @@
 							{{ csrfField() }}
 							<div class="col-auto mb-4">
 								<div class="wrap-input100">
-									<input class="input100" 
-									type="email" 
-									name="email" 
+									<input class="input100"
+									type="email"
+									name="email"
 									value="{{ old('email') }}"
 									placeholder="Email" required>
 									<span class="focus-input100"></span>
@@ -59,7 +59,7 @@
 								@if(hasErrorFor('email'))
 									<span class="text-danger">{{ getErrorFor('email') }}</span>
 								@endif
-								
+
 							</div>
 
 							<div class="col-auto mb-4">

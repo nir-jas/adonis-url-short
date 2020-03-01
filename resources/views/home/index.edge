@@ -2,6 +2,10 @@
 
 @section('styles')
 <style>
+	.shorten-btn:hover {
+		background: #333333 !important;
+	}
+
 	.banner-title {
 		font-size: 4.5vw;
 		font-weight: lighter;
@@ -36,7 +40,7 @@
 					<input name="long_url" type="url" class="form-control form-control-lg bg-light"
 						placeholder="Paste a link to be shortened" aria-label="Paste a link to be shortened" required>
 					<div class="input-group-append ">
-						<button type="submit" class="btn bg-primary text-white px-4">Shorten</button>
+						<button type="submit" class="btn bg-blue-grey shorten-btn text-white px-4">Shorten</button>
 					</div>
 				</div>
 				<div class="custom-url">

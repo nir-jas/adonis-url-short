@@ -1,6 +1,7 @@
 const { hooks } = require("@adonisjs/ignitor");
 const _ = use('lodash')
 const moment = require('moment')
+const numeral = require('numeral');
 
 hooks.after.providersBooted(() => {
 	const Response = use("Adonis/Src/Response");
@@ -81,6 +82,10 @@ hooks.after.providersBooted(() => {
 
 	View.global("getDayTimeString",function(d) {
 		return moment(d).format("ddd, MMM Do YYYY, h:mm A")
+	})
+
+	View.global('numeral',function(value,format) {
+		return numeral(value).format(format)
 	})
 });
 

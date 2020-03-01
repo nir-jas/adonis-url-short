@@ -39,6 +39,7 @@
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "nanoid": "^2.1.11",
+    "numeral": "^2.0.6",
     "qrcode": "^1.4.4",
     "scrape-meta": "^0.1.4",
     "ua-parser-js": "^0.7.21",

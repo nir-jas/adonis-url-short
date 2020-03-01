@@ -8,23 +8,16 @@ html,body {
 	min-height: 100vh;
 }
 
-*{ 
+*{
 	 margin: 0;
     padding: 0;
-    
+
 }
 
 body {
   margin: 0;
   font-family: 'Nunito', sans-serif;
   background-color: #F8F9FA;
-}
-
-.shorten-btn {
-  background: #0062cc;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #0062cc, #26ed9f);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #0062cc, #26ed9f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 
 .custom-url--title {

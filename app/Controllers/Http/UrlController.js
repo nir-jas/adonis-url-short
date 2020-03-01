@@ -1,66 +1,84 @@
 "use strict";
-const Url = use("App/Models/Url")
-const UrlStat = use("App/Models/UrlStat")
+const Url = use("App/Models/Url");
+const UrlStat = use("App/Models/UrlStat");
 
-const Helpers = use('Helpers')
-const Logger = use('Logger')
-const QRcode = require('qrcode')
-const UserAgent = require('ua-parser-js')
-const Reader = require('@maxmind/geoip2-node').Reader;
+const Helpers = use("Helpers");
+const Logger = use("Logger");
+const QRcode = require("qrcode");
+const UserAgent = require("ua-parser-js");
+
+const Config = use('Config')
+const Reader = require("@maxmind/geoip2-node").Reader;
 
 class UrlController {
 	async view({ request, view, response, auth, params }) {
 		try {
-			const url = await Url.query()
-				.where('url_key', params.url_key)
-				.first()
+			const url = await Url.findBy("url_key", params.url_key);
+			const user = await auth.user;
 
-			const qrCode = await QRcode.toDataURL(url.long_url,{
-				errorCorrectionLevel: 'H',
-				scale:4,
-				margin:0
+			if (!url) {
+				response.send(view.render('errors.index',{code:404, message:"Page Not Found"}))
+				return
+			}
+
+			if (url.user_id && user) {
+				let roles = await user.getRoles();
+				if (!roles.includes('administrator') && url.user_id!=user.id) {
+					response.send(view.render('errors.index',{code:401, message:"You don't have access to this page"}))
+					return
+				}
+			}
+
+			if (url.user_id && !user) {
+				response.send(view.render('errors.index',{code:401, message:"You don't have access to this page"}))
+				return
+			}
+
+			const qrCode = await QRcode.toDataURL(Config.get('app.url')+'/'+url.url_key, {
+				errorCorrectionLevel: "H",
+				scale: 4,
+				margin: 0
 			});
 			let stats = [];
 
-			if (url.clicks>0) {
+			if (url.clicks > 0) {
 				const browserStats = await UrlStat.query()
-					.select('browser as name')
-					.where('url_id', url.id)
-					.groupBy('browser')
+					.select("browser as name")
+					.where("url_id", url.id)
+					.groupBy("browser")
 					.count("* as clicks");
 
 				const platformStats = await UrlStat.query()
-					.select('platform as name')
-					.where('url_id', url.id)
-					.groupBy('platform')
+					.select("platform as name")
+					.where("url_id", url.id)
+					.groupBy("platform")
 					.count("* as clicks");
 
 				const countryStats = await UrlStat.query()
-					.select('country as name')
-					.where('url_id', url.id)
-					.groupBy('country')
+					.select("country as name")
+					.where("url_id", url.id)
+					.groupBy("country")
 					.count("* as clicks");
 
-					stats = [
-						{
-							title: 'Browsers',
-							stats: browserStats
-						},
-						{
-							title: 'Platforms',
-							stats: platformStats
-						},
-						{
-							title: 'Countries',
-							stats: countryStats
-						}
-					]
+				stats = [
+					{
+						title: "Browsers",
+						stats: browserStats
+					},
+					{
+						title: "Platforms",
+						stats: platformStats
+					},
+					{
+						title: "Countries",
+						stats: countryStats
+					}
+				];
 			}
 
-
-			return view.render('stats.index',{qr_code:qrCode,url:url,stats:stats})
+			return view.render("stats.index", { qr_code: qrCode, url: url, stats: stats });
 		} catch (error) {
-			Logger.error("View Stats Error", error)
+			Logger.error("View Stats Error", error);
 		}
 	}
 
@@ -69,79 +87,76 @@ class UrlController {
 			const urlKey = request.input("custom_url_key") ? request.input("custom_url_key") : await Url.generateKey();
 
 			await Url.create({
-				'user_id'    : await auth.user ? auth.user.id : null,
-				'long_url'   : request.input("long_url"),
-				'meta_title' : request.input("long_url"),
-				'url_key'    : urlKey,
-				'is_custom'  : request.input("custom_url_key") ? 1 : 0,
-				'ip'         : request.ip(),
-			})
+				user_id: (await auth.user) ? auth.user.id : null,
+				long_url: request.input("long_url"),
+				meta_title: request.input("long_url"),
+				url_key: urlKey,
+				is_custom: request.input("custom_url_key") ? 1 : 0,
+				ip: request.ip()
+			});
 
-			response.route('short_url.stats',{"url_key":urlKey})
-			return
+			response.route("short_url.stats", { url_key: urlKey });
+			return;
 		} catch (error) {
-			Logger.error("Short URL Creation Failed",error)
+			Logger.error("Short URL Creation Failed", error);
 			session.flash({
-				'error':'Sorry, our service is currently under maintenance.'
-			})
-			response.redirect('back')
-			return
+				error: "Sorry, our service is currently under maintenance."
+			});
+			response.redirect("back");
+			return;
 		}
-
 	}
 
-	async redirect({ request, view, response, auth, params }){
+	async redirect({ request, view, response, auth, params }) {
 		try {
-			const url = await Url.findBy('url_key',params.url_key)
+			const url = await Url.findBy("url_key", params.url_key);
 
 			if (!url) {
-				response.route('error', { status: '404' })
+				response.send(view.render('errors.index',{code:404, message:"Page Not Found"}))
 				return
 			}
 
-			url.merge({clicks:url.clicks+1})
-			await url.save()
+			url.merge({ clicks: url.clicks + 1 });
+			await url.save();
 
-			const agent = UserAgent(request.header('user-agent'))
-			const country = await this.getCountryByIp(request.ip())
+			const agent = UserAgent(request.header("user-agent"));
+			const country = await this.getCountryByIp(request.ip());
 
 			await UrlStat.create({
-				'url_id'           : url.id,
-				'referer'          : request.header('referer')?request.header('referer'):null,
-				'ip'               : request.ip(),
-				'device'           : agent.device.vendor?agent.device.vendor:'Other',
-				'platform'         : agent.os.name,
-				'platform_version' : agent.os.version,
-				'browser'          : agent.browser.name,
-				'browser_version'  : agent.browser.version,
-				'country'          : country.country_code,
-				'country_full'     : country.country_name
-			})
+				url_id: url.id,
+				referer: request.header("referer") ? request.header("referer") : null,
+				ip: request.ip(),
+				device: agent.device.vendor ? agent.device.vendor : "Other",
+				platform: agent.os.name,
+				platform_version: agent.os.version,
+				browser: agent.browser.name,
+				browser_version: agent.browser.version,
+				country: country.country_code,
+				country_full: country.country_name
+			});
 
-			response.redirect(url.long_url,false,301);
-			return
+			response.redirect(url.long_url, false, 301);
+			return;
 		} catch (error) {
-			Logger.error("URL Redirection Failed",error)
-
+			Logger.error("URL Redirection Failed \n", error);
 		}
 	}
 
 	async getCountryByIp(ip) {
 		try {
-			const reader = await Reader.open(Helpers.databasePath('GeoLite2-Country.mmdb'))
+			const reader = await Reader.open(Helpers.databasePath("GeoLite2-Country.mmdb"));
 			const country = await reader.country(ip);
 
 			return {
-				country_code:country.country.isoCode,
-				country_name:country.country.names.en
-			}
+				country_code: country.country.isoCode,
+				country_name: country.country.names.en
+			};
 		} catch (error) {
 			return {
-				country_code:'N/A',
-				country_name:'Unknown'
-			}
+				country_code: "N/A",
+				country_name: "Unknown"
+			};
 		}
-
 	}
 }
 

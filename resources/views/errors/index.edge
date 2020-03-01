@@ -102,35 +102,13 @@
 			font-size: 14px;
 			text-decoration: none;
 			text-transform: uppercase;
-			background: #18e06f;
+			background: #0062cc;
 			display: inline-block;
 			padding: 15px 30px;
 			border-radius: 5px;
 			color: #fff;
 			font-weight: 700;
 			margin-top: 20px;
-		}
-
-		.notfound-social {
-			margin-top: 20px;
-		}
-
-		.notfound-social>a {
-			display: inline-block;
-			height: 40px;
-			line-height: 40px;
-			width: 40px;
-			font-size: 14px;
-			color: #fff;
-			background-color: #dedede;
-			margin: 3px;
-			padding: 0px;
-			-webkit-transition: 0.2s all;
-			transition: 0.2s all;
-		}
-
-		.notfound-social>a:hover {
-			background-color: #18e06f;
 		}
 
 		@media only screen and (max-width: 767px) {
@@ -165,11 +143,12 @@
 			</div>
 			<h1>oops!</h1>
 			<h2>Error
-				@if(flashMessage('code'))
-					{{flashMessage('code')}}
+				@if(code)
+					{{code}}
 				@endif
-				@if(flashMessage('error'))
-					{{flashMessage('error')}}
+
+				@if(message)
+					: {{message}}
 				@endif
 			</h2>
 			<a href="{{ route('home') }}">GO HOME</a>
