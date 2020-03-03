@@ -78,10 +78,13 @@
 		@loggedIn
 			<div class="dropdown user-dropdown text-white order-3">
 				<div class="d-flex justify-content-center align-items-center dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<img src="https://ui-avatars.com/api/?name={{ auth.user.name }}&rounded=true&size=36&background=B2DFDB&color=fff&bold=true" class="mr-2" />
+					<!--<img src="https://ui-avatars.com/api/?name={{ auth.user.name }}&rounded=true&size=36&background=B2DFDB&color=fff&bold=true" class="mr-2" />-->
 					<span class="text-white d-none d-md-inline d-lg-inline">{{auth.user.name}}</span>
 				</div>
+
 				<div class="dropdown-menu user-dropdown-menu mt-2" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+					<a class="dropdown-item" href="{{ route('changePassword') }}">Change Password</a>
 					<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
 				</div>
 			</div>
