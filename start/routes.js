@@ -28,6 +28,12 @@ Route.post('/login','AuthController.login').as('loginUser').validator(['Login'])
 Route.group(() => {
 	Route.get('/logout','AuthController.logout').as('logout')
 	Route.get('/dashboard', 'DashboardController.index')
+	Route.on('/profile').render('users.partials.profile').as('profile')
+	Route.on('/changepassword').render('users.partials.change_password').as('changePassword')
+
+	Route.on('/users').render('users.index').as('users')
+
+	Route.post('/changepassword','UserController.changePassword').as('changeUserPassword').validator(['ChangePassword'])
 }).middleware(['auth'])
 
 // Authenticated Routes for Admin
@@ -37,6 +43,8 @@ Route.group(() => {
 
 Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])
+
+	Route.get('/all/users','UserController.getUsers')
 }).prefix('api').namespace('Api/V1')
 
 Route.get('/:url_key','UrlController.redirect')

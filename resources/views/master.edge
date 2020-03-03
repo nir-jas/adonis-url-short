@@ -85,6 +85,8 @@
 					<span class="text-white d-none d-md-inline d-lg-inline">{{auth.user.name}}</span>
 				</div>
 				<div class="dropdown-menu dropdown-menu-right user-dropdown-menu mt-2" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+					<a class="dropdown-item" href="{{ route('changePassword') }}">Change Password</a>
 					<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
 				</div>
 			</div>
