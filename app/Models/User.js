@@ -6,6 +6,8 @@ const Hash = use("Hash");
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use("Model");
 
+const Url = use('App/Models/Url')
+
 class User extends Model {
 	static boot() {
 		super.boot();
@@ -35,6 +37,16 @@ class User extends Model {
 	 */
 	tokens() {
 		return this.hasMany("App/Models/Token");
+	}
+
+	static async totalGuests() {
+		let guests = await Url.query().whereNull('user_id').countDistinct('ip as total');
+
+		if (guests) {
+			return guests[0].total
+		} else {
+			return 0
+		}
 	}
 }
 

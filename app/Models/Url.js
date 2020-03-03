@@ -21,6 +21,15 @@ class Url extends Model {
 		return this.hasMany('App/Models/UrlStat')
 	}
 
+	static async getClicks() {
+		let clicks = await this.query().sum('clicks as total');
+
+		if(clicks)
+			return clicks[0].total
+		else
+			return 0
+	}
+
 	static async generateKey() {
 		let alphabet = Config.get('adonisUrl.hash_alphabet');
 		let size1 = Config.get('adonisUrl.hash_size_1');

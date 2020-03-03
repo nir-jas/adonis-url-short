@@ -57,6 +57,9 @@
 		<div class="collapse navbar-collapse order-4 order-md-2 order-lg-2 ml-0 ml-md-4 ml-lg-4" id="navbarSupportedContent">
 			@loggedIn
 				<ul class="navbar-nav mr-auto">
+					<li class="nav-item text-center py-2 {{ request.match(['/']) ? 'active' : '' }}">
+						<a class="nav-link" href="{{ route('/') }}">Home</a>
+					</li>
 					<li class="nav-item text-center py-2 {{ request.match(['/dashboard']) ? 'active' : '' }}">
 						<a class="nav-link" href="{{ route('/dashboard') }}">Dashboard</a>
 					</li>
@@ -78,10 +81,10 @@
 		@loggedIn
 			<div class="dropdown user-dropdown text-white order-3">
 				<div class="d-flex justify-content-center align-items-center dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<img src="https://ui-avatars.com/api/?name={{ auth.user.name }}&rounded=true&size=36&background=B2DFDB&color=fff&bold=true" class="mr-2" />
+					<img src="{{ assetsUrl('images/user.png') }}" width="36" class="mr-2" />
 					<span class="text-white d-none d-md-inline d-lg-inline">{{auth.user.name}}</span>
 				</div>
-				<div class="dropdown-menu user-dropdown-menu mt-2" aria-labelledby="userDropdown">
+				<div class="dropdown-menu dropdown-menu-right user-dropdown-menu mt-2" aria-labelledby="userDropdown">
 					<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
 				</div>
 			</div>

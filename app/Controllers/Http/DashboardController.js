@@ -1,6 +1,7 @@
 "use strict";
 
 const Url = use('App/Models/Url')
+const User = use('App/Models/User')
 
 const Logger = use("Logger");
 
@@ -12,7 +13,11 @@ class DashboardController {
 			if (roles.includes('administrator')) {
 				stats = {
 					capacity 	: await Url.urlKeyCapacity(),
-					remaining 	: await Url.urlKeyRemaining()
+					remaining 	: await Url.urlKeyRemaining(),
+					url_shortened : await Url.getCount(),
+					url_clicks : await Url.getClicks(),
+					users_registered: await User.getCount(),
+					users_guest: await User.totalGuests()
 				}
 			} else {
 
