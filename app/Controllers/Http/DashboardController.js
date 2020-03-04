@@ -9,6 +9,7 @@ class DashboardController {
 	async index({ view, auth }) {
 		try {
 			let data,stats;
+			let user = await auth.user;
 			let roles = await auth.user.getRoles()
 			if (roles.includes('administrator')) {
 				stats = {
@@ -20,7 +21,10 @@ class DashboardController {
 					users_guest: await User.totalGuests()
 				}
 			} else {
-
+				stats = {
+					url_shortened : await Url.query().where('user_id',user.id).getCount(),
+					url_clicks : await Url.getClicks(user.id)
+				}
 			}
 
 			data = {

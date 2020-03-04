@@ -45,6 +45,9 @@ Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])
 
 	Route.get('/all/users','UserController.getUsers')
+
+	Route.get('/urls', 'UrlController.getUrls').middleware(['auth:session'])
+	Route.delete('/urls/:id', 'UrlController.deleteUrl').middleware(['auth:session'])
 }).prefix('api').namespace('Api/V1')
 
 Route.get('/:url_key','UrlController.redirect')

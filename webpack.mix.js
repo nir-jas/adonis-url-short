@@ -42,6 +42,10 @@ mix
 		'resources/assets/js/users.js'
 	], 'public/js/users.js')
 	.scripts([
+		"node_modules/moment/min/moment.min.js",
+		'resources/assets/js/dashboard.js'
+	], 'public/js/dashboard.js')
+	.scripts([
 		'node_modules/clipboard/dist/clipboard.min.js',
 		"node_modules/jssocials/dist/jssocials.min.js",
 		"node_modules/moment/min/moment.min.js",
