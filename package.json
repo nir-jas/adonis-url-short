@@ -36,6 +36,7 @@
     "@maxmind/geoip2-node": "^1.4.0",
     "adonis-acl": "^1.1.1",
     "adonis-mix": "^1.2.0",
+    "izitoast": "^1.4.0",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "nanoid": "^2.1.11",

@@ -17,12 +17,14 @@ mix
 	.styles([
 		'node_modules/bootstrap/dist/css/bootstrap.min.css',
 		'resources/assets/css/colors.css',
-		'resources/assets/css/style.css'
+		'resources/assets/css/style.css',
+		'node_modules/izitoast/dist/css/iziToast.min.css'
 	], 'public/css/styles.css')
 	.scripts([
 		'node_modules/jquery/dist/jquery.js',
 		'node_modules/popper.js/dist/umd/popper.min.js',
 		'node_modules/bootstrap/dist/js/bootstrap.min.js',
+		'node_modules/izitoast/dist/js/iziToast.min.js'
 	],'public/js/master.js')
 	.version()
 
@@ -39,6 +41,7 @@ mix
 		'resources/assets/js/home.js'
 	], 'public/js/home.js')
 	.scripts([
+		"node_modules/moment/min/moment.min.js",
 		'resources/assets/js/users.js'
 	], 'public/js/users.js')
 	.scripts([

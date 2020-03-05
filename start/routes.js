@@ -34,6 +34,7 @@ Route.group(() => {
 	Route.on('/users').render('users.index').as('users')
 
 	Route.post('/changepassword','UserController.changePassword').as('changeUserPassword').validator(['ChangePassword'])
+
 }).middleware(['auth'])
 
 // Authenticated Routes for Admin
@@ -45,6 +46,7 @@ Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])
 
 	Route.get('/all/users','UserController.getUsers')
+	Route.post('/user/change_password', 'UserController.changePassword')
 }).prefix('api').namespace('Api/V1')
 
 Route.get('/:url_key','UrlController.redirect')

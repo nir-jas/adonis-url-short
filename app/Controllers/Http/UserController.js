@@ -7,7 +7,6 @@ class UserController {
 	async changePassword({ request, view, response, auth,session }){
 		let params=request.all();
 		try {
-
 			let verifyPassword=await Hash.verify(params.currentPassword,auth.user.password);
 			if(!verifyPassword){
 				session.flash({
