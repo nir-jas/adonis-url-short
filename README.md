@@ -35,7 +35,7 @@ URL Short is a URL shortener web application based on the AdonisJS Framework. It
 npm i -g @adonisjs/cli
 
 # Change directory
-cd adonis-url
+cd adonis-url-short
 
 # Install Dependencies
 npm install
