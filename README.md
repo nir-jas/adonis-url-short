@@ -70,6 +70,10 @@ adonis serve --dev
 
     *You can watch assets with `npm run watch`*
 
+## Contributing
+
+Thank you for considering contributing to URL Short.
+
 ## License
 
-URL Short is an open-source software licensed under the [MIT license](https://github.com/nir-jas/adonis-url/blob/master/LICENSE).
+URL Short is an open-source software licensed under the [MIT license](https://github.com/nir-jas/adonis-url-short/blob/master/LICENSE).
