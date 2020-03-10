@@ -1,6 +1,6 @@
 # URL Short
 
-URL Short is a URL shortener web application based on the AdonisJS Framework. It is an open-source, easy-to-use but powerful URL shortener. It allows you to host your own URL shortener, and gives you many useful features.
+URL Short is a URL shortener web application based on the AdonisJS Framework. It is an open-source and easy-to-use URL shortener. It allows you to host your own URL shortener, and gives you many useful features.
 
 > **Warning: URL Short is still in development**, constantly being optimized and isn't still stable enough to be used in production environments.
 
@@ -15,7 +15,7 @@ URL Short is a URL shortener web application based on the AdonisJS Framework. It
 ## Screenshots
 
 ![Home](https://imgur.com/HYD0hC2.png)
-![Stats](https://imgur.com/VKhcxNg.png)
+![Stats](https://imgur.com/MqRxPgz.png)
 ![Login](https://imgur.com/xCNA0zm.png)
 ![Dashboard](https://imgur.com/OuR4YVw.png)
 

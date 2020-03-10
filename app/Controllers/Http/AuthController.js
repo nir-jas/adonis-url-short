@@ -37,7 +37,7 @@ class AuthController {
 		try {
 			await auth.remember(params.remember ? true : false).attempt(params.email, params.password);
 
-			response.route("home");
+			response.route("dashboard");
 			return;
 		} catch (error) {
 			Logger.error("User login error ", error);
@@ -55,7 +55,7 @@ class AuthController {
 
 	async logout({ response, auth }) {
 		await auth.logout();
-		response.route("home");
+		response.route("login");
 		return;
 	}
 }
