@@ -24,7 +24,7 @@ URL Short is a URL shortener web application based on the AdonisJS Framework. It
 * Node.js >= 8.0.0
 * npm >= 3.0.0
 * MySQL or MariaDB
-* adonis-cli (optional)
+* adonis-cli
 
 ## Getting Started
 
