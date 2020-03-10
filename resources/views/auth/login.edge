@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Adonis URL</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		crossorigin="anonymous">
+	<link rel="apple-touch-icon" sizes="57x57" href="{{ assetsUrl('images/apple-icon-57x57.png' ) }}">
+	<link rel="apple-touch-icon" sizes="60x60" href="{{ assetsUrl('images/apple-icon-60x60.png')}}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ assetsUrl('images/apple-icon-72x72.png')}}">
+	<link rel="apple-touch-icon" sizes="76x76" href="{{ assetsUrl('images/apple-icon-76x76.png')}}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ assetsUrl('images/apple-icon-114x114.png')}}">
+	<link rel="apple-touch-icon" sizes="120x120" href="{{ assetsUrl('images/apple-icon-120x120.png')}}">
+	<link rel="apple-touch-icon" sizes="144x144" href="{{ assetsUrl('images/apple-icon-144x144.png')}}">
+	<link rel="apple-touch-icon" sizes="152x152" href="{{ assetsUrl('images/apple-icon-152x152.png')}}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ assetsUrl('images/apple-icon-180x180.png')}}">
+	<link rel="icon" type="image/png" sizes="192x192" href="{{ assetsUrl('images/android-icon-192x192.png')}}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ assetsUrl('images/favicon-32x32.png')}}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{ assetsUrl('images/favicon-96x96.png')}}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ assetsUrl('images/favicon-16x16.png')}}">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="{{ assetsUrl('images/ms-icon-144x144.png')}}">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+	{{ style(mix('css/styles.css')) }}
+	{{ style(mix('css/login.css')) }}
+</head>
+
+<body>
+	<div class="content-container container-fluid p-3 p-md-4 p-lg-4 bg-primary">
+		<div class="form-row">
+			<div class="col-12 col-md-4 col-lg-4 offset-md-4 offset-lg-4">
+				<div class="card shadow-sm p-4">
+					<div class="text-center py-2">
+						<a class="" href="{{ route('/') }}">
+							<img src="{{ assetsUrl('images/link.png') }}" width="70">
+						</a>
+					</div>
+					<h1 class="text-center py-4 text-primary">LOGIN</h2>
+						<form method="post" action="{{ route('loginUser') }}">
+							{{ csrfField() }}
+							<div class="col-auto mb-4">
+								<div class="wrap-input100">
+									<input class="input100"
+									type="email"
+									name="email"
+									value="{{ old('email') }}"
+									placeholder="Email" required>
+									<span class="focus-input100"></span>
+									<span class="symbol-input100">
+										<span class="lnr lnr-envelope"></span>
+									</span>
+								</div>
+								@if(hasErrorFor('email'))
+									<span class="text-danger">{{ getErrorFor('email') }}</span>
+								@endif
+
+							</div>
+
+							<div class="col-auto mb-4">
+								<div class="wrap-input100">
+									<input class="input100" type="password" name="password" placeholder="Password" required>
+									<span class="focus-input100"></span>
+									<span class="symbol-input100">
+										<span class="lnr lnr-lock"></span>
+									</span>
+								</div>
+								@if(hasErrorFor('password'))
+									<span class="text-danger">{{ getErrorFor('password') }}</span>
+								@endif
+							</div>
+
+							<div class="col-auto">
+								<div class="form-check mb-2">
+									<input class="form-check-input" type="checkbox" id="autoSizingCheck" name="remember">
+									<label class="form-check-label text-muted" for="autoSizingCheck">
+										Remember me
+									</label>
+								</div>
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-login bg-blue-grey text-white btn-block mb-2 p-3 btn-lg">LOGIN</button>
+							</div>
+
+							@if(flashMessage('error'))
+								<div class="col-auto">
+									<div class="alert bg-grey-100 text-danger mt-4 alert-dismissible fade show shadow-sm pl-2 pr-4" role="alert">
+										{{ flashMessage('error') }}
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								</div>
+							@endif
+
+							@if(flashMessage('success'))
+								<div class="col-auto">
+									<div class="alert bg-grey-100 text-success mt-4 alert-dismissible fade show shadow-sm pl-2 pr-4" role="alert">
+										<span class="text-justify">{{ flashMessage('success') }}</span>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								</div>
+							@endif
+
+							<div class="col-auto text-center text-muted pt-3">
+							<p>Not a member? <a href="{{route('register')}}" class="text-blue-grey register-link" style="text-decoration:none;">Sign up now</a></p>
+							</div>
+
+						</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{ script(mix('js/master.js')) }}
+</body>
+
+</html>

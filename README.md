@@ -1,31 +1,79 @@
-# Adonis fullstack application
+# URL Short
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
+URL Short is a URL shortener web application based on the AdonisJS Framework. It is an open-source and easy-to-use URL shortener. It allows you to host your own URL shortener, and gives you many useful features.
 
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
+> **Warning: URL Short is still in development**, constantly being optimized and isn't still stable enough to be used in production environments.
 
-## Setup
+## Features
 
-Use the adonis command to install the blueprint
+* URL Shortener
+* Customized short URL's(ex: example.com/adonis)
+* QR code generator
+* Simple Interface
+* User & Admin Dashboard
+
+## Screenshots
+
+![Home](https://imgur.com/HYD0hC2.png)
+![Stats](https://imgur.com/MqRxPgz.png)
+![Login](https://imgur.com/xCNA0zm.png)
+![Dashboard](https://imgur.com/OuR4YVw.png)
+
+## Prerequisites
+
+* Node.js >= 8.0.0
+* npm >= 3.0.0
+* MySQL or MariaDB
+* adonis-cli
+
+## Getting Started
+
+### Via Cloning The Repository
 
 ```bash
-adonis new yardstick
-```
+# if you don't have AdonisJS CLI
+npm i -g @adonisjs/cli
 
-or manually clone the repo and then run `npm install`.
+# Change directory
+cd adonis-url
 
+# Install Dependencies
+npm install
 
-### Migrations
+# Copy .env.example to .env and update it to your specific needs. Don't forget to set DB_USER and DB_PASSWORD with the settings used behind.
+cp .env.example .env
 
-Run the following command to run startup migrations.
+# Generate App Key
+adonis key:generate
 
-```js
+# Run migrations
 adonis migration:run
+
+# Seed Database
+adonis seed
+
+# Serve
+adonis serve --dev
 ```
+
+## Login Details
+
+   | Email             | Name | Password | Role       |
+   |-------------------|----------|----------|--------------|
+   | admin@test.com | Admin    | admin@123    | Administrator |
+   | user@test.com  | User     | user@123    | User  |
+
+## Compiling assets
+
+1. `npm install`
+2. `npm run dev` or `npm run production`
+
+    *You can watch assets with `npm run watch`*
+
+## Contributing
+
+Thank you for considering contributing to URL Short.
+
+## License
+
+URL Short is an open-source software licensed under the [MIT license](https://github.com/nir-jas/adonis-url-short/blob/master/LICENSE).

@@ -1,0 +1,57 @@
+<div class="card shadow-sm" v-cloak>
+	<div class="card-body pt-4 pb-2">
+		<div class="mb-2 d-flex justify-content-between">
+			<h4 class="card-title">My URLs</h4>
+			<div>
+				<a href="{{ route('/') }}" class="btn btn-sm text-white bg-blue-grey">Add URL</a>
+			</div>
+		</div>
+			<div class="form-row bg-light text-blue-grey py-2">
+				<div class="col-12 col-md-3 p-2">
+					Short URL
+				</div>
+				<div class="col-12 col-md-5 p-2">
+					Long URL
+				</div>
+				<div class="col-md-1 p-2">
+					Clicks
+				</div>
+				<div class="col-md-2 p-2">
+					Date
+				</div>
+				<div class="col-md-1 p-2">
+					Actions
+				</div>
+			</div>
+			<div class="form-row border-bottom" v-for="(url,index) in urls" v-if="urls.length>0||!isLoading">
+				<div class="col-12 col-md-3 p-2 text-blue-grey">
+					{{config('app.url')}}/@{{url.url_key}}</div>
+				<div class="col-12 col-md-5 p-2 text-overflow-ellipsis">
+					@{{url.meta_title}}<br>
+					<a :href="url.long_url" class="text-muted" target="_blank">@{{url.long_url}}</a>
+				</div>
+				<div class="col-md-1 p-2">@{{url.clicks}}</div>
+				<div class="col-12 col-md-2 p-2">
+					@{{getFromNowString(url.created_at)}}
+				</div>
+				<div class="col-12 col-md-1 p-2">
+					<a :href="'{{config('app.url')}}/+'+url.url_key"><i class="fas fa-eye text-blue-grey" style="cursor: pointer;"></i></a>
+					<i class="fas fa-trash text-danger ml-2" @click="deleteUrl(url.id)" style="cursor: pointer;"></i>
+				</div>
+			</div>
+			<div class="text-center" style="padding:100px;" v-if="isLoading">
+				Loading . . .
+			</div>
+			<div class="text-center" style="padding:100px;" v-if="urls.length==0">
+				<h2 class="text-muted text-grey">No Urls Found</h2>
+			</div>
+			<div class="d-flex justify-content-between py-2" v-if="urls.length>0 && pagination.last_page!=1">
+				<button class="btn btn-sm text-white bg-blue-grey" :disabled="pagination.page==1" @click="getUrls(pagination.page-1)">Previous</button>
+				<div>
+					Page @{{pagination.page}}/@{{pagination.last_page}}
+				</div>
+				<button class="btn btn-sm text-white bg-blue-grey" :disabled="pagination.page==pagination.last_page" @click="getUrls(pagination.page+1)">Next</button>
+			</div>
+	</div>
+</div>
+

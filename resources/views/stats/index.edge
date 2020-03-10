@@ -1,0 +1,88 @@
+@layout('master')
+
+@section('styles')
+{{ style(mix('css/stats.css')) }}
+<style>
+	.jssocials-share-email .jssocials-share-link {
+		color: #d14836 !important;
+	}
+</style>
+@endsection
+
+@section('content')
+<div class="container py-2 py-md-4 py-lg-4">
+	<div class="text-muted">
+		<ul class="list-inline" style="font-size:small;">
+			<li class="list-inline-item">
+				<i class="far fa-clock"></i>
+				<i>{{ getDayTimeString(url.created_at) }}</i>
+			</li>
+			<li class="list-inline-item">
+				<i class="far fa-eye"></i>
+				<span class="ml-2">{{ url.clicks }}</span>
+			</li>
+		</ul>
+		<span class="text-primary url-meta-title" style="font-size:x-large;">{{url.meta_title }}</span>
+	</div>
+	<div class="card shadow-sm mt-3">
+		<div class="form-row py-4">
+			<div class="col-12 col-md-3 col-lg-3">
+				<div class="text-center">
+					<img src="{{qr_code}}" />
+				</div>
+				<div class="text-center pt-2">
+					<span>Scan QR Code</span>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-9 col-lg-9">
+				<div class="d-flex flex-column justify-content-between h-100 px-4 px-md-0 px-lg-0 pt-4 pt-md-0 pt-lg-0">
+					<div>
+						<label class="text-muted">Short Url</label></br>
+						<p>
+							<span class="short-url">
+								<a href="{{ config('app.url')+'/'+url.url_key }}" target="_blank"
+									id="copy">{{ config('app.url')+'/'+url.url_key }}</a>
+							</span>
+							<button data-clipboard-text="{{ config('app.url')+'/'+url.url_key }}"
+								class="btn btn-sm ml-4 btn-clipboard px-1 py-0 btn-outline-success">Copy</button>
+						</p>
+					</div>
+
+					<div class="text-overflow-ellipsis">
+						<label class="text-muted">Original Url</label></br>
+							<a class="text-dark" href="https://adonisjs.com/docs/4.0/authentication" target="_blank"
+								style="text-decoration:none;">{{url.long_url}}</a>
+					</div>
+
+					<div>
+						<div id="jssocials"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		@each(item in stats)
+			<div class="card shadow-sm p-2 mt-3">
+			<div class="p-2">{{ item.title }} <span class="badge text-white" style="background:#0062cc;">Total : {{item.stats.length}}</span></div>
+				<div class="form-row m-0">
+					@each(stat in item.stats)
+						<div class="col-6 col-md-3 col-lg-3 mb-2">
+							<div class="card p-3 d-flex align-items-center">
+								<h4 class="text-primary">{{ stat.name }}</h4>
+								<h4 class="text-grey">{{ stat.clicks }}</h4>
+							</div>
+						</div>
+					@endeach
+				</div>
+			</div>
+		@endeach
+	</div>
+</div>
+@endsection
+
+@section('scripts')
+{{ script(mix('js/stats.js')) }}
+@endsection

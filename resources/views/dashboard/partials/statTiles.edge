@@ -1,0 +1,107 @@
+
+
+<div class="form-row py-3">
+	@loggedIn
+		@is('administrator')
+			<div class="col-12 col-md-2 col-lg-2 mb-2">
+				<div class="card border-bottom border-bottom-blue shadow-sm h-100 tile-card bg-blue-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+								<div class="tile-number text-blue mt-2">{{ upperCase(numeral(data.stats.capacity,'0a')) }}+</div>
+								<div class="tile-text text-blue-grey">Capacity</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-2 col-lg-2 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-teal bg-teal-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+								<div class="tile-number text-teal mt-2">{{ upperCase(numeral(data.stats.remaining,'0a')) }}+</div>
+								<div class="tile-text text-blue-grey">Remaining</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-2 col-lg-2 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-indigo bg-indigo-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+							<div class="tile-number text-indigo mt-2">{{ data.stats.url_shortened }}</div>
+								<div class="tile-text text-blue-grey">URL Shortened</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-2 col-lg-2 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-pink bg-pink-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+								<div class="tile-number text-pink mt-2">{{ data.stats.url_clicks }}</div>
+								<div class="tile-text text-blue-grey">Clicks & Redirects</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-2 col-lg-2 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-green bg-green-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+							<div class="tile-number text-green mt-2">{{ data.stats.users_registered }}</div>
+								<div class="tile-text text-blue-grey">Registered Users</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-2 col-lg-2 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-amber bg-amber-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+								<div class="tile-number text-amber mt-2">{{ data.stats.users_guest }}</div>
+								<div class="tile-text text-blue-grey">Guest</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		@endis
+
+		@is('user and !administrator')
+			<div class="col-12 col-md-6 col-lg-6 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-blue bg-blue-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+							<div class="tile-number text-blue mt-2">{{ data.stats.url_shortened }}</div>
+								<div class="tile-text text-blue-grey">URL Shortened</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-md-6 col-lg-6 mb-2">
+				<div class="card  shadow-sm h-100 tile-card border-bottom border-bottom-teal bg-teal-50">
+					<div class="card-content h-100">
+						<div class="card-body h-100">
+							<div class="d-flex flex-column justify-content-between align-items-center h-100">
+								<div class="tile-number text-teal mt-2">{{ data.stats.url_clicks }}</div>
+								<div class="tile-text text-blue-grey">Clicks & Redirects</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		@endis
+	@endloggedIn
+</div>

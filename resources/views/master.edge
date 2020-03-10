@@ -3,48 +3,104 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Adonis URL Short</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		crossorigin="anonymous">
+	<link rel="apple-touch-icon" sizes="57x57" href="{{ assetsUrl('images/apple-icon-57x57.png' ) }}">
+	<link rel="apple-touch-icon" sizes="60x60" href="{{ assetsUrl('images/apple-icon-60x60.png')}}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ assetsUrl('images/apple-icon-72x72.png')}}">
+	<link rel="apple-touch-icon" sizes="76x76" href="{{ assetsUrl('images/apple-icon-76x76.png')}}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ assetsUrl('images/apple-icon-114x114.png')}}">
+	<link rel="apple-touch-icon" sizes="120x120" href="{{ assetsUrl('images/apple-icon-120x120.png')}}">
+	<link rel="apple-touch-icon" sizes="144x144" href="{{ assetsUrl('images/apple-icon-144x144.png')}}">
+	<link rel="apple-touch-icon" sizes="152x152" href="{{ assetsUrl('images/apple-icon-152x152.png')}}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ assetsUrl('images/apple-icon-180x180.png')}}">
+	<link rel="icon" type="image/png" sizes="192x192"  href="{{ assetsUrl('images/android-icon-192x192.png')}}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ assetsUrl('images/favicon-32x32.png')}}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{ assetsUrl('images/favicon-96x96.png')}}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ assetsUrl('images/favicon-16x16.png')}}">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="{{ assetsUrl('images/ms-icon-144x144.png')}}">
+	<meta name="theme-color" content="#ffffff">
 
-	{{ style('css/style.css') }}
-	{{ style('css/colors.css') }}
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" crossorigin="anonymous">
+
+	{{ style(mix('css/styles.css')) }}
 
 	@!section('styles')
 </head>
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand d-flex align-items-center " href="#">
-			<img src="{{ assetsUrl('link.png') }}" width="35">
-			<span class="ml-2">Adonis URL</span>
-		</a>
-		<div class="collapse navbar-collapse" id="navbarText">
+		@loggedIn
+			<a class="navbar-brand d-flex align-items-center order-2 order-md-1 order-lg-1 m-auto" href="{{ route('/') }}">
+				<img src="{{ assetsUrl('images/link.png') }}" width="35">
+				<span class="ml-2 d-none d-md-inline d-lg-inline">URL Short</span>
+			</a>
+
+			<button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+		@else
+			<a class="navbar-brand d-flex align-items-center order-1 order-md-1 order-lg-1 " href="{{ route('/') }}">
+				<img src="{{ assetsUrl('images/link.png') }}" width="35">
+				<span class="ml-2">URL Short</span>
+			</a>
+
+			<button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+		@endloggedIn
+
+		<div class="collapse navbar-collapse order-4 order-md-2 order-lg-2 ml-0 ml-md-4 ml-lg-4" id="navbarSupportedContent">
+			@loggedIn
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item text-center py-2 {{ request.match(['/']) ? 'active' : '' }}">
+						<a class="nav-link" href="{{ route('/') }}">Home</a>
+					</li>
+					<li class="nav-item text-center py-2 {{ request.match(['/dashboard']) ? 'active' : '' }}">
+						<a class="nav-link" href="{{ route('/dashboard') }}">Dashboard</a>
+					</li>
+					@is('administrator')
+						<li class="nav-item text-center py-2 {{ request.match(['/users']) ? 'active' : '' }}">
+							<a class="nav-link" href="{{ route('/users') }}">Users</a>
+						</li>
+					@endis
+				</ul>
+			@endloggedIn
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="{{ route('login') }}">Login</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ route('register') }}">Register</a>
-				</li>
+				@loggedIn
+
+				@else
+					<li class="nav-item text-center">
+						<a class="nav-link" href="{{ route('/login') }}">Login</a>
+					</li>
+					<li class="nav-item text-center">
+						<a class="nav-link" href="{{ route('/register') }}">Register</a>
+					</li>
+				@endloggedIn
 			</ul>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-	</nav>
+		@loggedIn
+			<div class="dropdown user-dropdown text-white order-3">
+				<div class="d-flex justify-content-center align-items-center dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<img src="{{ assetsUrl('images/user.png') }}" width="36" class="mr-2" />
+					<span class="text-white d-none d-md-inline d-lg-inline">{{auth.user.name}}</span>
+				</div>
+				<div class="dropdown-menu dropdown-menu-right user-dropdown-menu mt-2" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+					<a class="dropdown-item" href="{{ route('changePassword') }}">Change Password</a>
+					<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+				</div>
+			</div>
+		@endloggedIn
+	  </nav>
 
 	@!section('content')
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		crossorigin="anonymous">
-	</script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		crossorigin="anonymous">
-	</script>
+	{{ script(mix('js/master.js')) }}
 
 	@!section('scripts')
 </body>
