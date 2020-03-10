@@ -23,6 +23,21 @@ class UrlController {
 		}
 	}
 
+	async getMyUrls({ request, response, auth }){
+		try {
+			const user = await auth.user;
+			let urls = await Url.query()
+				.where('user_id', user.id)
+				.orderBy('created_at','desc')
+				.paginate(request.input('page', 1),request.input('limit',5))
+
+			response.jsend(urls,"Successfully Requested")
+			return
+		} catch (error) {
+			Logger.error("Get My Urls Failed \n", error);
+		}
+	}
+
 	async deleteUrl({ request, response, params }){
 		try {
 			let url = await Url.find(params.id);

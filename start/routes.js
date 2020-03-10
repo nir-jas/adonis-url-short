@@ -46,13 +46,16 @@ Route.group(() => {
 
 // Common Authenticated APIs
 Route.group(() => {
-	Route.get('/urls', 'UrlController.getUrls').middleware(['auth:session'])
-	Route.delete('/urls/:id', 'UrlController.deleteUrl').middleware(['auth:session'])
-}).prefix('api/v1').namespace('Api/V1')
+	Route.delete('/urls/:id', 'UrlController.deleteUrl')
+	Route.get('/myurls', 'UrlController.getMyUrls')
+}).prefix('api/v1')
+.namespace('Api/V1')
+.middleware(['auth'])
 
 // Authenticated APIs for Admin
 Route.group(() => {
 	Route.get('/users','UserController.getUsers')
+	Route.get('/urls', 'UrlController.getUrls')
 })
 .prefix('api/v1')
 .namespace('Api/V1')

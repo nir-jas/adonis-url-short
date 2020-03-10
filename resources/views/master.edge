@@ -63,6 +63,11 @@
 					<li class="nav-item text-center py-2 {{ request.match(['/dashboard']) ? 'active' : '' }}">
 						<a class="nav-link" href="{{ route('/dashboard') }}">Dashboard</a>
 					</li>
+					@is('administrator')
+						<li class="nav-item text-center py-2 {{ request.match(['/users']) ? 'active' : '' }}">
+							<a class="nav-link" href="{{ route('/users') }}">Users</a>
+						</li>
+					@endis
 				</ul>
 			@endloggedIn
 			<ul class="navbar-nav ml-auto">

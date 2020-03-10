@@ -20,7 +20,7 @@ const app = new Vue({
 		},
 		getUrls(page=1) {
 			this.isLoading = true;
-			axios.get('/api/v1/urls',{
+			axios.get('/api/v1/myurls',{
 				params:{
 					page:page
 				}
