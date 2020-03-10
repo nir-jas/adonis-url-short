@@ -6,7 +6,7 @@ $(document).ready(function () {
 		"serverSide": true,
 		'ajax': {
 			'type': 'GET',
-			'url': 'http://127.0.0.1:3333/api/all/users'
+			'url': '/api/v1/users'
 		},
 		'columns':
 			[

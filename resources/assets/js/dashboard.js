@@ -20,7 +20,7 @@ const app = new Vue({
 		},
 		getUrls(page=1) {
 			this.isLoading = true;
-			axios.get('/api/urls',{
+			axios.get('/api/v1/urls',{
 				params:{
 					page:page
 				}
@@ -41,7 +41,7 @@ const app = new Vue({
 			})
 		},
 		deleteUrl(url_id) {
-			axios.delete(`/api/urls/${url_id}`)
+			axios.delete(`/api/v1/urls/${url_id}`)
 			.then((response)=>{
 				toastr.success('Link was deleted successfully');
 				this.getUrls(this.pagination.page)
