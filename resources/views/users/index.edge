@@ -1,31 +1,123 @@
 @layout('master')
 
 @section('styles')
-
+<style>
+	.vuetable thead {
+		background: #CFD8DC;
+	}
+</style>
 @endsection
 
 @section('content')
-<div class="container py-2 py-md-4 py-lg-4">
-	<div class="row m-0">
-		
+<div class="container-fluid py-2 py-md-4 py-lg-4" id="app">
+	<div class="card shadow-sm p-3">
+		<div class="px-2">
+			<div class="d-flex justify-content-between align-items-center">
+				<h4 class="d-flex align-items-center">All users<span class="badge bg-primary text-white ml-2" style="font-size:12px;">@{{totalRecords}}</span></h4>
+
+				<div class="mb-1" style="width:32%">
+					<div class="form-inline d-flex justify-content-end">
+						<div class="form-group mx-sm-3 p-0 w-50">
+							<label for="inputSearch" class="sr-only">Search</label>
+							<input type="text" class="form-control w-100" id="inputSearch" placeholder="Search by name and email" v-model="searchText">
+						</div>
+						<button type="button" class="btn bg-blue-grey text-white" @click="searchUser">Search</button>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<vuetable  ref="vuetable"
+				api-url="/api/v1/users"
+				:fields="fields"
+				data-path="data.data"
+				:transform="transformData"
+				pagination-path="data.pagination"
+				:sort-order="sortOrder"
+				:show-sort-icons="true"
+				:css="css.table"
+				:query-params="makeQueryParams"
+				track-by="id"
+				@vuetable:pagination-data="onPaginationData"
+				@vuetable:loading="showLoader=true"
+				@vuetable:loaded="showLoader=false">
+				<div slot="action-slot" slot-scope="props" >
+					<span @click="changePassword(props.rowData)" class="fas fa-key text-muted" data-toggle="tooltip" data-placement="top" style=" cursor: pointer;" title="Change password" ></span>
+				</div>
+				</vuetable>
+			</div>
+		</div>
+
+	<div class="d-flex justify-content-between p-2">
+		<vuetable-pagination-info info-template="Displaying {from} to {to} of {total} items" no-data-template="No Data" ref="paginationInfo" :css="css.pagination"></vuetable-pagination-info>
+		<vuetable-pagination ref="pagination" :css="css.pagination"  @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
 	</div>
 
-	<table id="usersTable" class="table table-bordered table-sm">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Email</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
+	<div class="modal" id="changePasswordModal">
+		<div class="modal-dialog">
+		  	<div class="modal-content">
 
-	
+				<div class="modal-header py-2 d-flex align-items-center bg-blue-grey text-white">
+					<h4 class="modal-title">Change Password</h4>
+					<button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+				</div>
+
+
+				<div class="modal-body">
+					<form  @submit.prevent="submitChangePassword()">
+						{{csrfField()}}
+
+						<div class="form-group">
+							<label class="form-label">Current Password</label>
+							<input type="password" class="form-control" name="currentPassword"
+								placeholder="Enter current password" v-model="changePasswordObject.current_password" >
+						</div>
+
+						<div class="form-group">
+							<label class="form-label">New Password</label>
+							<input type="password" class="form-control" name="password"
+								placeholder="Enter new password" required  minlength="8" v-model="changePasswordObject.new_password">
+						</div>
+
+						<div class="form-group">
+							<label class="form-label">Confirm New Password</label>
+							<input type="password" class="form-control" name="password_confirmation"
+								placeholder="Confirm new password" required minlength="8" v-model="changePasswordObject.confirm_password">
+						</div>
+
+						<div class="form-group mb-0">
+							<button type="submit" class="btn btn-login bg-blue-grey text-white btn-block ">Change Password</button>
+						</div>
+
+						<div class="col-auto" v-if="errorMessage">
+							<div class="alert bg-grey-100 text-danger mt-4 alert-dismissible fade show shadow-sm pl-2 pr-4" role="alert">
+								@{{errorMessage}}
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+		  </div>
+		</div>
+	  </div>
+
+</div>
+
+
+
 </div>
 @endsection
 
 @section('scripts')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vuetable-2@next"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"></script>
+<script>
+	axios.defaults.headers.common['X-CSRF-TOKEN'] = "{{ csrfToken }}";
+</script>
+
 {{ script(mix('js/users.js')) }}
 @endsection

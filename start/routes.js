@@ -24,30 +24,38 @@ Route.get('/+:url_key', 'UrlController.view').as('short_url.stats')
 Route.post('/register','AuthController.register').as('registerUser').validator(['Register'])
 Route.post('/login','AuthController.login').as('loginUser').validator(['Login'])
 
-// Common Authenticated Routes
+// Common Authenticated View Routes
 Route.group(() => {
 	Route.get('/logout','AuthController.logout').as('logout')
 	Route.get('/dashboard', 'DashboardController.index')
 	Route.on('/profile').render('users.partials.profile').as('profile')
 	Route.on('/changepassword').render('users.partials.change_password').as('changePassword')
-
-	Route.on('/users').render('users.index').as('users')
-
 	Route.post('/changepassword','UserController.changePassword').as('changeUserPassword').validator(['ChangePassword'])
+
 }).middleware(['auth'])
 
-// Authenticated Routes for Admin
+// Authenticated View Routes for Admin
 Route.group(() => {
-
-})
-
+	Route.on('/users').render('users.index').as('users')
+}).middleware(['auth','is:administrator'])
+//Common APIs
 Route.group(() => {
 	Route.post('/custom_link/check_availability','UrlController.customLinkAvailabilityCheck').validator(['CustomLinkAvailability'])
+	Route.post('/user/change_password', 'UserController.changePassword')
+}).prefix('api/v1').namespace('Api/V1')
 
-	Route.get('/all/users','UserController.getUsers')
-
+// Common Authenticated APIs
+Route.group(() => {
 	Route.get('/urls', 'UrlController.getUrls').middleware(['auth:session'])
 	Route.delete('/urls/:id', 'UrlController.deleteUrl').middleware(['auth:session'])
-}).prefix('api').namespace('Api/V1')
+}).prefix('api/v1').namespace('Api/V1')
+
+// Authenticated APIs for Admin
+Route.group(() => {
+	Route.get('/users','UserController.getUsers')
+})
+.prefix('api/v1')
+.namespace('Api/V1')
+.middleware(['auth','is:administrator'])
 
 Route.get('/:url_key','UrlController.redirect')
