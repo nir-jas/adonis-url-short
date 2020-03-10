@@ -76,4 +76,4 @@ Thank you for considering contributing to URL Short.
 
 ## License
 
-URL Short is an open-source software licensed under the [MIT license](https://github.com/nir-jas/adonis-url-short/blob/master/LICENSE).
+URL Short is an open-source software licensed under the [MIT license](https://github.com/nir-jas/adonis-url-short/blob/master/LICENCE).
