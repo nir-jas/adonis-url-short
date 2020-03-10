@@ -171,7 +171,7 @@ let app = new Vue({
 		},
 		submitChangePassword(){
 			this.changePasswordObject.user_id=this.currentUser.id;
-			axios.post('/api/user/change_password',this.changePasswordObject)
+			axios.post('/api/v1/user/change_password',this.changePasswordObject)
 				.then((response)=>{
 					this.errorMessage="";
 					iziToast.success({
