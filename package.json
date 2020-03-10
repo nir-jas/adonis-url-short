@@ -44,7 +44,8 @@
     "qrcode": "^1.4.4",
     "scrape-meta": "^0.1.4",
     "ua-parser-js": "^0.7.21",
-    "useragent": "^2.3.0"
+    "useragent": "^2.3.0",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "bootstrap": "^4.4.1",

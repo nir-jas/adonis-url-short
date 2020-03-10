@@ -1,6 +1,7 @@
 @layout('master')
 
 @section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <style>
 	.tile-card {
 		border-bottom-width: 4px !important;
@@ -16,25 +17,22 @@
 		cursor: pointer;
 		font-size: 2rem;
 	}
-	/* @media (max-width: 768px) {
-		.tile-text {
-			font-size: 1rem;
-		}
-
-		.tile-number {
-			cursor: pointer;
-			font-size: 1.2rem;
-		}
-	} */
 </style>
 @endsection
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" id="dashboard">
 	@include('dashboard.partials.statTiles')
+	@include('dashboard.partials.myurls')
 </div>
 @endsection
 
 @section('scripts')
-
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+	axios.defaults.headers.common['X-CSRF-TOKEN'] = "{{ csrfToken }}";
+</script>
+{{ script(mix('js/dashboard.js')) }}
 @endsection

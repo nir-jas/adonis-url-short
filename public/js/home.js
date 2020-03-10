@@ -111,7 +111,7 @@ $(function () {
 			if (value.length>0) {
 				$('#link-availability-status').html('<span><i class="fa fa-spinner"></i> Loading..</span>');
 				$.ajax({
-					url: "/api/custom_link/check_availability",
+					url: "/api/v1/custom_link/check_availability",
 					type: 'POST',
 					data: {
 						'url_key': $('#custom_url_key').val()

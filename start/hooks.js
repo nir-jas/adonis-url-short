@@ -84,6 +84,10 @@ hooks.after.providersBooted(() => {
 		return moment(d).format("ddd, MMM Do YYYY, h:mm A")
 	})
 
+	View.global("getFromNowString",function(d) {
+		return moment(d).format("ddd, MMM Do YYYY, h:mm A").fromNow()
+	})
+
 	View.global('numeral',function(value,format) {
 		return numeral(value).format(format)
 	})

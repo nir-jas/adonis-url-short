@@ -45,3 +45,12 @@ body {
 .custom-url .url-field:focus {
   box-shadow: none;
 }
+
+[v-cloak] > * { display:none }
+[v-cloak]::before { content: "loading…" }
+
+.text-overflow-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

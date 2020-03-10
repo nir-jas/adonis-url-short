@@ -85,7 +85,7 @@ let app = new Vue({
 		searchUser() {
 			this.$refs.vuetable.refresh();
 		},
-		
+
 		transformData(data) {
 			this.totalRecords=data.data.total;
 			data.data.data = _.filter(data.data.data,(item)=>{
@@ -102,8 +102,8 @@ let app = new Vue({
 			if (data.data.data.length<data.data.perPage) {
 				toNumber -= (data.data.perPage-data.data.data.length)
 			}
-			
-			
+
+
 			if (data.data.page>1) {
 				formNumber=(data.data.page-1)*data.data.perPage+1;
 			}
@@ -135,7 +135,7 @@ let app = new Vue({
 		},
 
 		getUsers(){
-			axios.get('/api/all/users',{params:{page:1}})
+			axios.get('/api/v1/users',{params:{page:1}})
 				.then((response)=>{
 					console.log(response)
 				})
@@ -184,7 +184,7 @@ let app = new Vue({
 					this.errorMessage="";
 					if(error.response.data.message=='current_password required')
 						this.errorMessage="Current password is required";
-					
+
 					if(error.response.data.message=='invalid current_password')
 						this.errorMessage="Current password is not valid";
 
@@ -208,6 +208,6 @@ let app = new Vue({
 
 				})
 		}
-		
+
 	}
 });

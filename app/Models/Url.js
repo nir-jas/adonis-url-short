@@ -17,14 +17,27 @@ class Url extends Model {
 		})
 	}
 
-	urlStat(){
+	/**
+	 * Url has many UrlStat
+	 */
+	urlStat() {
 		return this.hasMany('App/Models/UrlStat')
 	}
 
-	static async getClicks() {
-		let clicks = await this.query().sum('clicks as total');
 
-		if(clicks)
+	/**
+	 * Url belongs to User
+	 */
+	user(){
+		return this.belongsTo('App/Models/User')
+	}
+
+	static async getClicks(user_id=null) {
+		let clicks = this.query();
+		if (user_id) clicks = clicks.where('user_id', user_id)
+		clicks = await clicks.sum('clicks as total');
+
+		if(clicks && clicks[0].total)
 			return clicks[0].total
 		else
 			return 0
