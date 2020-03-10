@@ -40,8 +40,11 @@ cd adonis-url
 # Install Dependencies
 npm install
 
-# Copy .env.example to .env and update it to your specific needs. Don't forget to set DB_USERNAME and DB_PASSWORD with the settings used behind.
+# Copy .env.example to .env and update it to your specific needs. Don't forget to set DB_USER and DB_PASSWORD with the settings used behind.
 cp .env.example .env
+
+# Generate App Key
+adonis key:generate
 
 # Run migrations
 adonis migration:run
