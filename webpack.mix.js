@@ -41,7 +41,10 @@ mix
 		'resources/assets/js/home.js'
 	], 'public/js/home.js')
 	.scripts([
-		"node_modules/moment/min/moment.min.js",
+		'node_modules/vue/dist/vue.min.js',
+		'node_modules/axios/dist/axios.min.js',
+		'node_modules/underscore/underscore-min.js',
+		'node_modules/moment/min/moment.min.js',
 		'resources/assets/js/users.js'
 	], 'public/js/users.js')
 	.scripts([
@@ -62,6 +65,7 @@ mix.copy('resources/assets/manifest.json', 'public/manifest.json');
 mix.copy('node_modules/jssocials/dist/jssocials-theme-minima.css.map','public/css/jssocials-theme-minima.css.map')
 mix.copy('node_modules/bootstrap/dist/js/bootstrap.min.js.map','public/js/bootstrap.min.js.map')
 mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css.map','public/css/bootstrap.min.css.map')
+mix.copy('node_modules/axios/dist/axios.min.map','public/js/axios.min.map')
 
 // Full API
 // mix.js(src, output);
